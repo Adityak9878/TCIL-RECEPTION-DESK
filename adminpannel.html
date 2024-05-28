@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background-color: rgb(214, 214, 192);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 400px;
+            padding: 20px;
+             
+        }
+
+        .ab, .login-container {
+            margin-bottom: 20px;
+        }
+
+        .login-box {
+            background-color: rgb(231, 9, 9);
+            padding: 20px;
+            border-radius: 19px;
+            box-shadow: 0px 0px 10px rgba(223, 61, 61, 0.1);
+            background-color: rgba(211, 226, 226, 0.957);
+             height: 70%;
+             width: 80%;
+            
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgb(9, 9, 10);
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: rgb(71, 80, 237);
+        }
+
+        body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-image: url('img/image1tcil.jpg'); /* URL of your background image */
+        background-size:136%; /* Cover the entire background */
+        background-position:1140% /* Center the background */
+    }
+    
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="ab">
+            <header style="color: rgb(14, 14, 14);">
+                <h1 style="font-size: 320%;">ADMIN PANNEL</h1>
+            </header>
+             
+            <h2>
+                <img src="img/admin.jpg" alt="" height="200" width="200">
+            </h2>
+        </div>  
+
+        <div class="login-container">
+            <div class="login-box">
+                <h2>Admin Login</h2>
+                <form id="loginForm" onsubmit="return validateForm()">
+                    <div class="form-group">
+                        <label for="userId">User ID:</label>
+                        <input type="text" id="userId" name="userId" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function validateForm() {
+            var userId = document.getElementById("userId").value;
+            var password = document.getElementById("password").value;
+
+            // Check if the provided credentials are correct
+            if (userId === "1234" && password === "welcome") {
+                // Redirect to another HTML file
+                window.location.href = "adminlogin.html";
+                return false; // Prevent form submission
+            } else {
+                alert("Invalid User ID or Password. Please try again.");
+                return false; // Prevent form submission
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.header {
+     
+    color: #1a2ee5;
+    padding: 20px;
+    text-align: center;
+    font-size: 110%;
+}
+.subheading {
+     
+    color: #000000;
+    padding: 10px;
+    text-align: center;
+    font-size: 130%;
+    
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 7px solid #000000;
+    border-radius: 10px;
+      background-size: cover;   
+        background-position: center;
+        height: 10%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    color: rgb(255, 162, 0);
+    font-size: 20px;
+     
+}
+
+ 
+input[type="submit"], input[type="reset"] {
+    background-color: #000101;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+input[type="submit"]:hover, input[type="reset"]:hover {
+    background-color: #0056b3;
+}
+.form-group {
+    margin-bottom: 20px;
+}
+.form-group label {
+    display: block;
+    font-weight: bold;
+}
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+.form-group textarea {
+    width: 80%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    resize: vertical;
+}
+.form-group input[type="file"] {
+    padding: 5px;
+}
+.form-group p {
+    font-size: 12px;
+    color: #777;
+}
+.form-group button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.form-group button:hover {
+    background-color: #0056b3;
+}
+.form-group .buttons {
+    display: flex;
+    justify-content: space-between;
+}
+.form-group .radio-buttons {
+    display: flex;
+    align-items: center;
+}
+.form-group .radio-buttons label {
+    margin-right: 10px;
+}
