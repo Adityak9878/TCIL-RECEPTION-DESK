@@ -85,13 +85,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->setFrom('tcil.reception@gmail.com', 'TCIL Reception');
 
             // Employee email content
-            $employeeBody = "Dear $employee_name,\n\nYou have a new client visit request.\n\nClient's Name: $client_name\nClient's Email: $client_email\n\nPlease see the attached image.\n\nThank you.";
+            $employeeBody = "Dear $employee_name,\n\nYou have a new client visit request.\n\n" .
+                "Visitor's Mobile Number: $VisitorsMobileNumber\n" .
+                "Visitor's Full Name: $VisitorsFullName\n" .
+                "Visitor's Designation: $VisitorsDesignation\n" .
+                "Visitor's Email ID: $VisitorsEmailID\n" .
+                "Identity Type: $IdentityType\n" .
+                "Type Of Visit: $TypeOfVisit\n" .
+                "Company Name: $CompanyName\n" .
+                "Company Address: $CompanyAddress\n" .
+                "Officials To Meet: $OfficialsToMeet\n" .
+                "Officer's Designation: $OfficersDesignation\n" .
+                "Officer's Extension Number: $OfficersExtensionNumber\n" .
+                "Officer's Email ID: $OfficersEmailID\n" .
+                "Electronic Items: $ELECTRONICITEMS\n" .
+                "Reason For Meeting: $ReasonForMeeting\n" .
+                "Check-in Date and Time: $CheckinDateTime\n\n" .
+                "Thank you.";
+
             
             // Add the captured image as an attachment
-            if ($captured_image) {
-                $decoded_image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $captured_image));
-                $mail->addStringAttachment($decoded_image, 'client_image.png');
-            }
+            // if ($captured_image) {
+            //     $decoded_image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $captured_image));
+            //     $mail->addStringAttachment($decoded_image, 'client_image.png');
+            // }
 
             // Send email to employee
             $mail->clearAddresses();
