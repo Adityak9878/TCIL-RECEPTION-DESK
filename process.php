@@ -85,43 +85,59 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->setFrom('tcil.reception@gmail.com', 'TCIL Reception');
 
             // Employee email content
-            $employeeBody = "Dear $employee_name,\n\nYou have a new client visit request.\n\n" .
-                "Visitor's Mobile Number: $VisitorsMobileNumber\n" .
-                "Visitor's Full Name: $VisitorsFullName\n" .
-                "Visitor's Designation: $VisitorsDesignation\n" .
-                "Visitor's Email ID: $VisitorsEmailID\n" .
-                "Identity Type: $IdentityType\n" .
-                "Type Of Visit: $TypeOfVisit\n" .
-                "Company Name: $CompanyName\n" .
-                "Company Address: $CompanyAddress\n" .
-                "Officials To Meet: $OfficialsToMeet\n" .
-                "Officer's Designation: $OfficersDesignation\n" .
-                "Officer's Extension Number: $OfficersExtensionNumber\n" .
-                "Officer's Email ID: $OfficersEmailID\n" .
-                "Electronic Items: $ELECTRONICITEMS\n" .
-                "Reason For Meeting: $ReasonForMeeting\n" .
-                "Check-in Date and Time: $CheckinDateTime\n\n" .
-                "Thank you.";
+            $employeeBody = "Dear Employee,\n\nYou have a new client visit request.\n\n" .
+                "Visitor's Mobile Number - \t$VisitorsMobileNumber\n\n" .
+                "Visitor's Full Name - \t$VisitorsFullName\n\n" .
+                "Visitor's Designation - \t$VisitorsDesignation\n\n" .
+                "Visitor's Email ID - \t$VisitorsEmailID\n\n" .
+                "Identity Type - \t$IdentityType\n\n" .
+                "Type Of Visit - \t$TypeOfVisit\n\n" .
+                "Company Name - \t$CompanyName\n\n" .
+                "Company Address - \t$CompanyAddress\n\n" .
+                "Officials To Meet - \t$OfficialsToMeet\n\n" .
+                "Officer's Designation - \t$OfficersDesignation\n\n" .
+                "Officer's Extension Number - \t$OfficersExtensionNumber\n\n" .
+                "Officer's Email ID - \t$OfficersEmailID\n\n" .
+                "Electronic Items - \t$ELECTRONICITEMS\n\n" .
+                "Reason For Meeting - \t$ReasonForMeeting\n\n" .
+                "Check-in Date and Time - \t$CheckinDateTime\n\n" .
+                "Thank you.\nVisitor's Image is attached below";
 
             
             // Add the captured image as an attachment
-            // if ($captured_image) {
-            //     $decoded_image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $captured_image));
-            //     $mail->addStringAttachment($decoded_image, 'client_image.png');
-            // }
+            if ($captured_image) {
+                $decoded_image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $captured_image));
+                $mail->addStringAttachment($decoded_image, 'client_image.png');
+            }
 
             // Send email to employee
             $mail->clearAddresses();
             $mail->addAddress($employee_email);
             $mail->isHTML(false); // Set email format to plain text
-            $mail->Subject = 'New Client Visit Request';
+            $mail->Subject = 'Visitor Report';
             $mail->Body    = $employeeBody;
 
             // Send email
             $mail->send();
             
             // Client email content
-            $clientBody = "Dear $client_name,\n\nThank you for visiting TCIL.\n\nPlease see the attached image.\n\nThank you.";
+            $clientBody = "Dear Client,\n\nYou have a new client visit request.\n\n" .
+            "Visitor's Mobile Number - \t$VisitorsMobileNumber\n\n" .
+            "Visitor's Full Name - \t$VisitorsFullName\n\n" .
+            "Visitor's Designation - \t$VisitorsDesignation\n\n" .
+            "Visitor's Email ID - \t$VisitorsEmailID\n\n" .
+            "Identity Type - \t$IdentityType\n\n" .
+            "Type Of Visit - \t$TypeOfVisit\n\n" .
+            "Company Name - \t$CompanyName\n\n" .
+            "Company Address - \t$CompanyAddress\n\n" .
+            "Officials To Meet - \t$OfficialsToMeet\n\n" .
+            "Officer's Designation - \t$OfficersDesignation\n\n" .
+            "Officer's Extension Number - \t$OfficersExtensionNumber\n\n" .
+            "Officer's Email ID - \t$OfficersEmailID\n\n" .
+            "Electronic Items - \t$ELECTRONICITEMS\n\n" .
+            "Reason For Meeting - \t$ReasonForMeeting\n\n" .
+            "Check-in Date and Time - \t$CheckinDateTime\n\n" .
+            "Thank you.\n";
 
             // Send email to client
             $mail->clearAddresses();

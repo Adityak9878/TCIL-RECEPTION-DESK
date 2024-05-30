@@ -243,7 +243,8 @@
 
             <div class="form-group">
                 <label for="officialToMeet">Official to Meet <b style="color: red;">*</b> </label>
-                <input type="text" id="OfficialsToMeet" name="OfficialsToMeet" required placeholder="Name of Official In Capital Mr.">
+                <input type="text" id="OfficialsToMeet" name="OfficialsToMeet" required
+                    placeholder="Name of Official In Capital Mr.">
             </div>
             <div class="form-group">
                 <label for="OfficersDesignation">Officer's Designation <b style="color: red;"> </b> </label>
@@ -324,93 +325,131 @@
     }
 
     function printForm() {
-        const form = document.getElementById('visitorForm');
-        const formData = new FormData(form);
-        const printWindow = window.open('', '', 'height=500, width=500');
+    const form = document.getElementById('visitorForm');
+    const formData = new FormData(form);
+    const printWindow = window.open('', '', 'height=500, width=500');
 
-        let htmlContent = `
-        <html>
-        <head>
-            <title>Print Form</title>
-            <style>
-                body {
-                    font-family: Arial, sans-serif;
-                    text-align: center;
-                }
-                .header {
-                    position: relative;
-                    margin-bottom: 20px;
-                    text-align: center;
-                }
-                .header h1, .header h2, .header h3 {
-                    margin: 0;
-                }
-                .header h1 {
-                    font-size: 19px;
-                }
-                .header h2 {
-                    font-size: 16px;
-                }
-                .header h3 {
-                    font-size: 15px;
-                }
-                .logo {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                }
-                .logo img {
-                    width: 100px;
-                    height: auto;
-                }
-                .content p {
-                    font-size: 12px;
-                }
-                .footer {
-                    font-size: 14px;
-                    margin-top: 20px;
-                    text-align: left;
-                }
-                .footer p {
-                    margin-bottom: 40px;
-                }
-            </style>
-        </head>
-        <body>
-            <div class="header">
-                <div class="logo">
-                    <img src="img/TCIL-Telecommunication-Consultants-India-Limited-Logo.jpg" alt="TCIL Logo">
-                </div>
-                <h1>टेलीकम्युनिकेशन्स कंसलटेंट्स इंडिया लिमिटेड <br> Telecommunication Consultants India Limited</h1>
-                <h2>A Government of India Enterprise</h2>
-                <h3>आगन्तुक पास / Visitor Pass</h3>
-            </div>
-            <div class="content">
-                <h1>Visitor Details</h1>`;
-
-        formData.forEach((value, key) => {
-            if (key === 'captured_image') {
-                htmlContent +=
-                    `<p><strong>${key} :</strong> <img src="${value}" alt="Captured Image" style="width:150px; height:auto;"></p>`;
-            } else {
-                htmlContent += `<p><strong>${key} :</strong> ${value}</p>`;
+    let htmlContent = `
+    <html>
+    <head>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                text-align: center;
             }
-        });
-
-        htmlContent += `
+            .header {
+                position: relative;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+            .header h1, .header h2, .header h3 {
+                margin: 0;
+            }
+            .header h1 {
+                font-size: 19px;
+            }
+            .header h2 {
+                font-size: 15px;
+            }
+            .header h3 {
+                font-size: 14px;
+            }
+            .logo {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+            .logo img {
+                width: 85px;
+                height: auto;
+            }
+            .content {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                font-size: 11px;
+                text-align: left;
+                margin-top: 20px;
+                padding: 0 20px;
+            }
+            .visitor-info {
+                display: flex;
+                flex-direction: column;
+                flex: 1;
+                margin-right: 20px;
+            }
+            .visitor-info p {
+                margin: 0 10px;
+                padding: 5px 0;
+            }
+            .visitor-image {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-left: 20px;
+            }
+            .footer {
+                font-size: 14px;
+                margin-top: 20px;
+                text-align: left;
+                padding: 0 20px;
+            }
+            .footer p {
+                display: inline-block;
+                margin: 0 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <div class="logo">
+                <img src="img/TCIL-Telecommunication-Consultants-India-Limited-Logo.jpg" alt="TCIL Logo">
             </div>
-            <div class="footer">
-                <p><b>Visitor Signature:</b> _______________________</p>
-                <p><b>Signature of Receptionist:</b> _______________________</p>
-                <p><b>Signature of Officer/Visited:</b> _______________________</p>
-            </div>
-        </body>
-        </html>`;
+            <h1>टेलीकम्युनिकेशन्स कंसलटेंट्स इंडिया लिमिटेड <br> Telecommunication Consultants India Limited</h1>
+            <h2>A Government of India Enterprise</h2>
+            <h3>आगन्तुक पास / Visitor Pass</h3>
+        </div>
+        <h4>Visitor Details</h4>
+        <div class="content">
+            <div class="visitor-info">`;
 
-        printWindow.document.write(htmlContent);
-        printWindow.document.close();
+    formData.forEach((value, key) => {
+        if (key !== 'captured_image') {
+            htmlContent += `<p><strong>${key}:</strong> ${value}</p>`;
+        }
+    });
+
+    htmlContent += `
+            </div>`;
+
+    formData.forEach((value, key) => {
+        if (key === 'captured_image') {
+            htmlContent += `
+            <div class="visitor-image">
+                <p><strong>Visitor:</strong></p>
+                <img src="${value}" alt="Captured Image" style="width:150px; height:auto;">
+            </div>`;
+        }
+    });
+
+    htmlContent += `
+        </div>
+        <div class="footer">
+            <h4 style={margin-left:4px}>Visitor Signature:_________________</h4><h4><b>Signature of Receptionist:</b> ______________</h4>
+            <h4 style={margin-top:4px}><b>Signature of Officer/Visited:</b> _______________________</h4>
+        </div>
+    </body>
+    </html>`;
+
+    printWindow.document.write(htmlContent);
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.onload = function() {
         printWindow.print();
-    }
+    };
+}
+
 
 
 
@@ -473,33 +512,34 @@
 
     // Function to fetch employee details
     async function fetchEmployeeDetails() {
-    const employeeName = document.getElementById("OfficialsToMeet").value;
-    if (employeeName.length > 2) { // Fetch details when more than 2 characters are entered
-        console.log(employeeName);
-        try {
-            const response = await fetch(`get_employee_details.php?OfficialsToMeet=${encodeURIComponent(employeeName)}`);
-            if (!response.ok) {
-                throw new Error('Network response was not ok ' + response.statusText);
-            }
-            const data = await response.json();
+        const employeeName = document.getElementById("OfficialsToMeet").value;
+        if (employeeName.length > 2) { // Fetch details when more than 2 characters are entered
+            console.log(employeeName);
+            try {
+                const response = await fetch(
+                    `get_employee_details.php?OfficialsToMeet=${encodeURIComponent(employeeName)}`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                const data = await response.json();
 
-            if (data.error) {
-                console.error(data.error);
-                // Handle error, e.g., clear the input fields or show a message
-                  document.getElementById("OfficersDesignation").value = "";
-                document.getElementById("OfficersEmailID").value = "";
-                 document.getElementById("OfficersExtensionNumber").value = "";
-            } else {
-                 document.getElementById("OfficersDesignation").value = data.Designation;
-                document.getElementById("OfficersEmailID").value = data.Email;
-                 document.getElementById("OfficersExtensionNumber").value = data.EMP_NO;
+                if (data.error) {
+                    console.error(data.error);
+                    // Handle error, e.g., clear the input fields or show a message
+                    document.getElementById("OfficersDesignation").value = "";
+                    document.getElementById("OfficersEmailID").value = "";
+                    document.getElementById("OfficersExtensionNumber").value = "";
+                } else {
+                    document.getElementById("OfficersDesignation").value = data.Designation;
+                    document.getElementById("OfficersEmailID").value = data.Email;
+                    document.getElementById("OfficersExtensionNumber").value = data.EMP_NO;
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
             }
-        } catch (error) {
-            console.error('Fetch error:', error);
         }
     }
-}
-document.getElementById("OfficialsToMeet").addEventListener("input", fetchEmployeeDetails);
+    document.getElementById("OfficialsToMeet").addEventListener("input", fetchEmployeeDetails);
 
     document.getElementById("submitBtn").addEventListener("click", function(event) {
         const capturedImageSrc = document.getElementById("capturedImage").dataset.image;
@@ -516,7 +556,7 @@ document.getElementById("OfficialsToMeet").addEventListener("input", fetchEmploy
         }
     });
     // Attach event listener to the employee name input field
-  
+
 
     async function fetchVisitorDetails() {
         const mobileNumber = document.getElementById("VisitorsMobileNumber").value;
@@ -535,10 +575,19 @@ document.getElementById("OfficialsToMeet").addEventListener("input", fetchEmploy
                     document.getElementById("VisitorsFullName").value = "";
                     document.getElementById("VisitorsDesignation").value = "";
                     document.getElementById("VisitorsEmailID").value = "";
+                    document.getElementById("IdentityType").value = "";
+                    document.getElementById("TypeOfVisit").value = "";
+                    document.getElementById("CompanyName").value = "";
+                    document.getElementById("CompanyAddress").value = "";
+
                 } else {
                     document.getElementById("VisitorsFullName").value = data.VisitorsFullName;
                     document.getElementById("VisitorsDesignation").value = data.VisitorsDesignation;
                     document.getElementById("VisitorsEmailID").value = data.VisitorsEmailID;
+                    document.getElementById("IdentityType").value = data.IdentityType;
+                    document.getElementById("TypeOfVisit").value = data.TypeOfVisit;
+                    document.getElementById("CompanyName").value = data.CompanyName;
+                    document.getElementById("CompanyAddress").value = data.CompanyAddress;
                 }
             } catch (error) {
                 console.error('Fetch error:', error);
@@ -551,22 +600,22 @@ document.getElementById("OfficialsToMeet").addEventListener("input", fetchEmploy
 
     // 
     document.addEventListener("DOMContentLoaded", function() {
-            document.getElementById("CheckOutDateTime").addEventListener("click", function() {
-                // Get the visitor's mobile number (assuming it's stored in an input field with id 'mobileNumber')
-                let mobileNumber = document.getElementById("VisitorsMobileNumber").value;
+        document.getElementById("CheckOutDateTime").addEventListener("click", function() {
+            // Get the visitor's mobile number (assuming it's stored in an input field with id 'mobileNumber')
+            let mobileNumber = document.getElementById("VisitorsMobileNumber").value;
 
-                // Make an AJAX request to the PHP script
-                let xhr = new XMLHttpRequest();
-                xhr.open("POST", "checkout.php", true);
-                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState === 4 && xhr.status === 200) {
-                        alert(xhr.responseText); // Display the response from the PHP script
-                    }
-                };
-                xhr.send("mobileNumber=" + encodeURIComponent(mobileNumber));
-            });
+            // Make an AJAX request to the PHP script
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", "checkout.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    alert(xhr.responseText); // Display the response from the PHP script
+                }
+            };
+            xhr.send("mobileNumber=" + encodeURIComponent(mobileNumber));
         });
+    });
     </script>
 
     <script src="script.js"></script>

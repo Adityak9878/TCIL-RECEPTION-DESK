@@ -27,7 +27,7 @@ if (isset($_GET['VisitorsMobileNumber'])) {
         exit();
     }
 
-    $stmt = $conn->prepare("SELECT `VisitorsFullName`, `VisitorsDesignation`, `VisitorsEmailID` FROM visitors WHERE `VisitorsMobileNumber` = ?");
+    $stmt = $conn->prepare("SELECT `VisitorsFullName`, `VisitorsDesignation`, `VisitorsEmailID`, `IdentityType` , `TypeOfVisit` ,`CompanyName` ,`CompanyAddress` FROM visitors WHERE `VisitorsMobileNumber` = ?");
     if (!$stmt) {
         error_log("Prepare failed: " . $conn->error);
         echo json_encode(['error' => 'Database query preparation failed']);
