@@ -242,9 +242,10 @@
             </div>
 
             <div class="form-group">
-                <label for="officialToMeet">Official to Meet <b style="color: red;">*</b> </label>
-                <input type="text" id="OfficialsToMeet" name="OfficialsToMeet" required
-                    placeholder="Name of Official In Capital Mr.">
+            <label for="officialToMeet">Official to Meet <b style="color: red;">*</b> </label>
+            <input type="text" id="OfficialsToMeet" name="OfficialsToMeet" required
+                placeholder="Name of Official In Capital Mr." list="officialsList">
+            <datalist id="officialsList"></datalist>
             </div>
             <div class="form-group">
                 <label for="OfficersDesignation">Officer's Designation <b style="color: red;"> </b> </label>
@@ -569,35 +570,74 @@
     });
 
     // Function to fetch employee details
-    async function fetchEmployeeDetails() {
-        const employeeName = document.getElementById("OfficialsToMeet").value;
-        if (employeeName.length > 2) { // Fetch details when more than 2 characters are entered
-            console.log(employeeName);
-            try {
-                const response = await fetch(
-                    `get_employee_details.php?OfficialsToMeet=${encodeURIComponent(employeeName)}`);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok ' + response.statusText);
-                }
-                const data = await response.json();
+    function fetchEmployeeDetails() {
+    const officialToMeetInput = document.getElementById("OfficialsToMeet");
+    const query = officialToMeetInput.value.trim();
 
-                if (data.error) {
-                    console.error(data.error);
-                    // Handle error, e.g., clear the input fields or show a message
-                    document.getElementById("OfficersDesignation").value = "";
-                    document.getElementById("OfficersEmailID").value = "";
-                    document.getElementById("OfficersExtensionNumber").value = "";
-                } else {
-                    document.getElementById("OfficersDesignation").value = data.Designation;
-                    document.getElementById("OfficersEmailID").value = data.Email;
-                    document.getElementById("OfficersExtensionNumber").value = data.EMP_NO;
+    if (query.length >= 3) {
+        fetch(`get_employee_details.php?query=${encodeURIComponent(query)}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
                 }
-            } catch (error) {
-                console.error('Fetch error:', error);
-            }
-        }
+                return response.json();
+            })
+            .then(data => {
+                const dataList = document.getElementById("officialsList");
+                dataList.innerHTML = ''; // Clear previous options
+                if (Array.isArray(data)) {
+                    data.forEach(official => {
+                        const option = document.createElement("option");
+                        option.value = official.Emp_Name;
+                        dataList.appendChild(option);
+                    });
+                } else {
+                    console.error('Unexpected data format:', data);
+                }
+            })
+            .catch(error => console.error('Error fetching employee details:', error));
     }
-    document.getElementById("OfficialsToMeet").addEventListener("input", fetchEmployeeDetails);
+}
+
+function fetchCompleteEmployeeDetails() {
+    const officialToMeetInput = document.getElementById("OfficialsToMeet");
+    const selectedEmployee = officialToMeetInput.value;
+
+    if (selectedEmployee) {
+        fetch(`get_employee_full_details.php?empName=${encodeURIComponent(selectedEmployee)}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Received data:', data); // Debugging line
+                if (data && typeof data === 'object') {
+                    document.getElementById("OfficersEmailID").value = data.Email || '';
+                    document.getElementById("OfficersDesignation").value = data.Designation || '';
+                    document.getElementById("OfficersExtensionNumber").value = data.EMP_NO || '';
+                } else {
+                    console.error('Unexpected data format:', data);
+                }
+            })
+            .catch(error => console.error('Error fetching full employee details:', error));
+    }
+}
+
+// Event listener for the input change
+document.getElementById("OfficialsToMeet").addEventListener("input", fetchEmployeeDetails);
+
+// Event listener for the enter key
+document.getElementById("OfficersDesignation").addEventListener("click", function(event) {
+    // if (event.key === 'Enter') {
+    //     event.preventDefault(); // Prevent the default form submit
+    console.log("Hey");
+        fetchCompleteEmployeeDetails();
+    //}
+});
+
+
 
     document.getElementById("submitBtn").addEventListener("click", function(event) {
         const capturedImageSrc = document.getElementById("capturedImage").dataset.image;

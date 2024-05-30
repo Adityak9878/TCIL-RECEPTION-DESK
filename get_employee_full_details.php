@@ -6,11 +6,11 @@ ob_end_flush(); // Ensure output buffering is disabled
 
 header('Content-Type: application/json'); // Ensure the response is JSON
 
-if (isset($_GET['query'])) {
-    $query = $_GET['query'];
+if (isset($_GET['empName'])) {
+    $empName = $_GET['empName'];
 
-    // Check if the query is empty
-    if (empty($query)) {
+    // Check if the empName is empty
+    if (empty($empName)) {
         echo json_encode([]);
         exit();
     }
@@ -29,28 +29,25 @@ if (isset($_GET['query'])) {
         exit();
     }
 
-    $stmt = $conn->prepare("SELECT `Emp_Name` FROM Employees WHERE `Emp_Name` LIKE ?");
+    $stmt = $conn->prepare("SELECT `Email`, `Designation`, `EMP_NO` FROM Employees WHERE `Emp_Name` = ?");
     if (!$stmt) {
         error_log("Prepare failed: " . $conn->error);
         echo json_encode(['error' => 'Database query preparation failed']);
         exit();
     }
 
-    $searchTerm = "%$query%";
-    $stmt->bind_param("s", $searchTerm);
+    $stmt->bind_param("s", $empName);
     $stmt->execute();
     $result = $stmt->get_result();
 
-    $employees = [];
-    while ($row = $result->fetch_assoc()) {
-        $employees[] = $row;
+    if ($row = $result->fetch_assoc()) {
+        echo json_encode($row);
+    } else {
+        echo json_encode(['error' => 'Employee not found']);
     }
-
-    echo json_encode($employees);
 
     $stmt->close();
     $conn->close();
 } else {
-    echo json_encode(['error' => 'No query provided']);
+    echo json_encode(['error' => 'No employee name provided']);
 }
-?>
