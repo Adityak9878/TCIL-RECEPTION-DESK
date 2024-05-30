@@ -325,11 +325,11 @@
     }
 
     function printForm() {
-    const form = document.getElementById('visitorForm');
-    const formData = new FormData(form);
-    const printWindow = window.open('', '', 'height=500, width=500');
+        const form = document.getElementById('visitorForm');
+        const formData = new FormData(form);
+        const printWindow = window.open('', '', 'height=500, width=500');
 
-    let htmlContent = `
+        let htmlContent = `
     <html>
     <head>
         <style>
@@ -368,7 +368,7 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: flex-start;
-                font-size: 11px;
+                font-size: 12px;
                 text-align: left;
                 margin-top: 20px;
                 padding: 0 20px;
@@ -409,31 +409,92 @@
             <h1>टेलीकम्युनिकेशन्स कंसलटेंट्स इंडिया लिमिटेड <br> Telecommunication Consultants India Limited</h1>
             <h2>A Government of India Enterprise</h2>
             <h3>आगन्तुक पास / Visitor Pass</h3>
+            <h4>Visitor Details</h4>
         </div>
-        <h4>Visitor Details</h4>
+        
         <div class="content">
             <div class="visitor-info">`;
 
-    formData.forEach((value, key) => {
-        if (key !== 'captured_image') {
-            htmlContent += `<p><strong>${key}:</strong> ${value}</p>`;
-        }
-    });
+        formData.forEach((value, key) => {
+            let displayKey;
+            if (key !== 'captured_image') {
+               
+                switch (key) {
+                    case 'VisitorsMobileNumber':
+                        displayKey = "Visitor's Mobile Number";
+                        break;
+                    case 'VisitorsFullName':
+                        displayKey = "Visitor's Full Name";
+                        break;
+                    case 'VisitorsDesignation':
+                        displayKey = "Visitor's Designation";
+                        break;
+                    case 'AdditionalPersonName':
+                        displayKey = 'Additional Person Name';
+                        break;
+                    case 'AdditionalPersonPhone':
+                        displayKey = 'Additional Person Phone';
+                        break;
+                    case 'VisitorsEmailID':
+                        displayKey = "Visitor's Email ID";
+                        break;
+                    case 'IdentityType':
+                        displayKey = 'Identity Type';
+                        break;
+                    case 'captured_image':
+                        displayKey = 'Photograph';
+                        break;
+                    case 'TypeOfVisit':
+                        displayKey = 'Type Of Visit';
+                        break;
+                    case 'CompanyName':
+                        displayKey = 'Company Name';
+                        break;
+                    case 'CompanyAddress':
+                        displayKey = 'Company Address';
+                        break;
+                    case 'OfficialsToMeet':
+                        displayKey = 'Officials To Meet';
+                        break;
+                    case 'OfficersDesignation':
+                        displayKey = 'Officer\'s Designation';
+                        break;
+                    case 'OfficersExtensionNumber':
+                        displayKey = 'Officer\'s Extension Number';
+                        break;
+                    case 'OfficersEmailID':
+                        displayKey = 'Officer\'s Email ID';
+                        break;
+                    case 'ElectronicItems':
+                        displayKey = 'Electronic Items';
+                        break;
+                    case 'ReasonForMeeting':
+                        displayKey = 'Reason For Meeting';
+                        break;
+                    case 'CheckinDateTime':
+                        displayKey = 'Check-in Date and Time';
+                        break;
+                    default:
+                        displayKey = key; // Default to the original key if no match is found
+                }
+                htmlContent += `<p><strong>${displayKey}:</strong> ${value}</p>`;
+            }
+        });
 
-    htmlContent += `
+        htmlContent += `
             </div>`;
 
-    formData.forEach((value, key) => {
-        if (key === 'captured_image') {
-            htmlContent += `
+        formData.forEach((value, key) => {
+            if (key === 'captured_image') {
+                htmlContent += `
             <div class="visitor-image">
                 <p><strong>Visitor:</strong></p>
                 <img src="${value}" alt="Captured Image" style="width:150px; height:auto;">
             </div>`;
-        }
-    });
+            }
+        });
 
-    htmlContent += `
+        htmlContent += `
         </div>
         <div class="footer">
             <h4 style={margin-left:4px}>Visitor Signature:_________________</h4><h4><b>Signature of Receptionist:</b> ______________</h4>
@@ -442,16 +503,13 @@
     </body>
     </html>`;
 
-    printWindow.document.write(htmlContent);
-    printWindow.document.close();
-    printWindow.focus();
-    printWindow.onload = function() {
-        printWindow.print();
-    };
-}
-
-
-
+        printWindow.document.write(htmlContent);
+        printWindow.document.close();
+        printWindow.focus();
+        printWindow.onload = function() {
+            printWindow.print();
+        };
+    }
 
     let stream; // Variable to hold the webcam stream
     const WIDTH = 500; // Width for captured image
