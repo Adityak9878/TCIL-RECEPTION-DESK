@@ -85,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->setFrom('tcil.reception@gmail.com', 'TCIL Reception');
 
             // Employee email content
-            $employeeBody = "Dear Employee,\n\nYou have a new client visit request.\n\n" .
+            $employeeBody = "Dear Employee,\n\n\n" .
                 "Visitor's Mobile Number - \t$VisitorsMobileNumber\n\n" .
                 "Visitor's Full Name - \t$VisitorsFullName\n\n" .
                 "Visitor's Designation - \t$VisitorsDesignation\n\n" .
@@ -121,7 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->send();
             
             // Client email content
-            $clientBody = "Dear Client,\n\nYou have a new client visit request.\n\n" .
+            $clientBody = "Dear Client,\n\n\n" .
             "Visitor's Mobile Number - \t$VisitorsMobileNumber\n\n" .
             "Visitor's Full Name - \t$VisitorsFullName\n\n" .
             "Visitor's Designation - \t$VisitorsDesignation\n\n" .

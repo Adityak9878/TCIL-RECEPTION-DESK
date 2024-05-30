@@ -497,8 +497,8 @@
         htmlContent += `
         </div>
         <div class="footer">
-            <h4 style={margin-left:4px}>Visitor Signature:_________________</h4><h4><b>Signature of Receptionist:</b> ______________</h4>
-            <h4 style={margin-top:4px}><b>Signature of Officer/Visited:</b> _______________________</h4>
+            <h5 style={margin-left:4px}>Visitor Signature:_________________</h5><h5><b>Signature of Receptionist:</b> ______________</h5>
+            <h5 style={margin-top:4px}><b>Signature of Officer/Visited:</b> _______________________</h5>
         </div>
     </body>
     </html>`;
